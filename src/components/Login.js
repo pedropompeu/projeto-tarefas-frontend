@@ -1,34 +1,27 @@
-// frontend/src/components/Login.js
-
 import React, { useState } from 'react';
-// 1. Importe o axios que instalámos
 import axios from 'axios';
 
-const Login = () => {
+// 1. O componente agora espera receber a função 'onLoginSuccess' como uma propriedade
+const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  // 2. Transformámos a função em 'async' para podermos usar 'await'
   const handleSubmit = async (event) => {
     event.preventDefault();
-    
-    // 3. Bloco try...catch para tratar sucessos e erros da API
     try {
-      // 4. Fazemos o pedido POST para o nosso endpoint de token
       const response = await axios.post('http://127.0.0.1:8000/api/token/', {
         username: username,
         password: password,
       });
 
-      // 5. Se o pedido for bem-sucedido, a API devolve o token
       const token = response.data.token;
-      console.log('Login bem-sucedido! Token:', token);
-      alert('Login realizado com sucesso!');
 
-      // No futuro, vamos guardar este token para usar noutros pedidos
+      // 2. ESTA É A MUDANÇA PRINCIPAL:
+      // Em vez de mostrar um alert e um console.log, chamamos a função
+      // que recebemos do App.js, entregando o token a ele.
+      onLoginSuccess(token);
       
     } catch (error) {
-      // 6. Se as credenciais estiverem erradas ou houver outro erro...
       console.error('Erro no login!', error);
       alert('Erro no login. Verifique as suas credenciais.');
     }
@@ -43,6 +36,7 @@ const Login = () => {
           type="text" 
           value={username}
           onChange={(e) => setUsername(e.target.value)}
+          autoComplete="username"
         />
       </div>
       <div>
@@ -51,6 +45,7 @@ const Login = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          autoComplete="current-password"
         />
       </div>
       <button type="submit">Entrar</button>
