@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-// 1. O componente agora espera receber a função 'onLoginSuccess' como uma propriedade
 const Login = ({ onLoginSuccess }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -16,9 +15,7 @@ const Login = ({ onLoginSuccess }) => {
 
       const token = response.data.token;
 
-      // 2. ESTA É A MUDANÇA PRINCIPAL:
-      // Em vez de mostrar um alert e um console.log, chamamos a função
-      // que recebemos do App.js, entregando o token a ele.
+     
       onLoginSuccess(token);
       
     } catch (error) {

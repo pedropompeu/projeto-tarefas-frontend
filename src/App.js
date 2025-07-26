@@ -1,5 +1,3 @@
-// frontend/src/App.js
-
 import React, { useState } from 'react';
 import Login from './components/Login';
 import TaskList from './components/TaskList';
@@ -9,7 +7,6 @@ function App() {
   const [token, setToken] = useState(null);
 
   const handleLoginSuccess = (receivedToken) => {
-    console.log('App.js recebeu o token:', receivedToken); // ESPIÃO 1
     setToken(receivedToken);
   };
 
@@ -17,8 +14,6 @@ function App() {
     setToken(null);
   };
 
-  // ESPIÃO 2: Vamos ver o valor do token a cada renderização
-  console.log('Renderizando App.js, o valor do token é:', token);
 
   return (
     <div className="App">
